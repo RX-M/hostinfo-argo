@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: hostinfo-2
+  name: {{ .Release.Name }}-hostinfo-2
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: hostinfo
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: hostinfo
+    spec:
+      containers:
+      - image: rxmllc/hostinfo:python-otel
+        name: hostinfo
+        ports:
+        - containerPort: 9898
+          name: gethostinfo
